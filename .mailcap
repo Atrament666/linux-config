@@ -1,0 +1,3 @@
+text/html;                      google-chrome-stable %s; nametemplate=%s.html
+text/html;                      google-chrome-stable -dump %s; nametemplate=%s.html; copiousoutput
+image/jpeg;                     xviewer %s;

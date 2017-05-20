@@ -1,0 +1,13 @@
+source "gpg -d ~/.mutt/passwords.gpg |"
+set imap_user = "atrament666"
+set folder = imaps://imap.gmail.com
+set spoolfile = +INBOX
+set record = "+[Gmail]/Sent Mail"
+set postponed = "[Gmail]/Drafts"
+set timeout = 10
+
+set smtp_url = 'smtps://atrament666@smtp.gmail.com'
+set record = ''
+set mail_check_stats
+
+

@@ -1,0 +1,38 @@
+source ~/.mutt/atrament666
+set header_cache = ~/.mutt/cache/
+macro index <f2> '<enter-command>source ~/.mutt/atrament666<enter><change-folder>!<enter>'
+macro index <f3> '<enter-command>source ~/.mutt/machat.v<enter><change-folder>!<enter>'
+
+mailboxes imaps://atrament666@imap.gmail.com imaps://machat.v@imap.gmail.com
+
+
+bind index G imap-fetch-mail
+bind attach <return> view-mailcap
+alternative_order text/plain text/html
+auto_view text/html
+
+##############
+color normal	white black
+color attachment brightyellow black
+color hdrdefault cyan black
+color indicator black cyan
+color markers	brightred black
+color quoted	green black
+color signature cyan black
+color status	brightgreen blue
+color tilde	blue black
+color tree	red black
+
+color index	red black ~D
+color index	magenta black ~T
+
+set sort=reverse-threads
+set sort_aux = last-date-received
+
+## Abook
+set query_command= "abook --mutt-query '%s'"
+macro index,pager  a "<pipe-message>abook --add-email-quiet<return>" "Add this sender to Abook"
+bind editor        <Tab> complete-query
+
+set imap_check_subscribed=yes
+

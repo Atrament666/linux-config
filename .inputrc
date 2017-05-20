@@ -1,0 +1,5 @@
+# ultimatni Atramentovo .inputrc
+
+#nastaveni prochazeni historie pomoci sipek, po zadani prvnich par znaku hledaneho prikazu
+"\e[A":history-search-backward
+"\e[B":history-search-forward
