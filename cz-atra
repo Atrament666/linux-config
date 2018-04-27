@@ -1,0 +1,102 @@
+// $XKeyboardConfig: xkeyboard-config/symbols/cz,v 1.10 2008-02-16 00:53:45 svu Exp $
+// $XFree86: xc/programs/xkbcomp/symbols/cz,v 1.2 2002/11/22 04:02:22 dawes 
+// Exp $
+
+partial default alphanumeric_keys
+xkb_symbols "basic" {
+  include "cz-atra(standard)"
+};
+
+partial alphanumeric_keys
+xkb_symbols "standard" {
+     
+    //2009 by Igor Mega  <imega@imega.cz>    
+    //Create from cz layout created by Kamil Toman <ktoman@email.cz> 
+    //2012 edited by Atrament 
+
+    //all keys are defined - do not need it
+	  
+    //include "latin"
+
+    name[Group1]= "CzePrg";
+
+    key <TLDE>	{ [     grave, asciitilde,    plusminus,dead_abovering ] 	};
+    key <AE01>	{ [   onehalf,     exclam,            1,        U00b9 ]	};
+    key <AE02>	{ [    ecaron,         at,            2,        U00b2 ]	};
+    key <AE03>	{ [    scaron,   sterling,            3,        U00b3 ] };
+    key <AE04>	{ [    ccaron,     dollar,            4,        U201a ]	};
+    key <AE05>	{ [    rcaron,    percent,            5,        U2018 ] };
+    key <AE06>	{ [    zcaron,asciicircum,            6,        U201d ]	};
+    key <AE07>	{ [    yacute,  ampersand,            7,        U2019 ] };
+    key <AE08>	{ [    aacute,   asterisk,            8,        U201e ]	};
+    key <AE09>	{ [    iacute,  parenleft,            9,        U201c ]	};
+    key <AE10>	{ [    eacute, parenright,            0,        U2070 ] };
+    key <AE11>	{ [     U002d, underscore,dead_doubleacute,    notequal ] };
+    key <AE12>	{ [     equal,       plus,   dead_acute,   dead_caron ]	};
+
+    key <AD01>	{ [         q,          Q,        U2261,        U2248 ]	};
+    key <AD02>	{ [         w,          W,        U2014,        U00b7 ]	};
+    key <AD03>	{ [         e,          E,     EuroSign,         cent ]	};
+    key <AD04>	{ [         r,          R,   registered,     trademark]	};
+    key <AD05>	{ [         t,          T,       tcaron,       Tcaron ]	};
+    key <AD06>  { [         z,          Z,        U03b4,        U2204 ] };
+    key <AD07>	{ [         u,          U,        U03c9,        U2126 ]	};
+    key <AD08>	{ [         i,          I,        U221e,        U2229 ]	};
+    key <AD09>	{ [         o,          O,       oacute,       Oacute ]	};
+    key <AD10>	{ [         p,          P,        U03c0,        U2030 ]	};
+
+		key <AD11>	{ [ uacute,   braceleft,       bracketleft,       Uacute ]	};
+    key <AD12>	{ [bracketright, braceright, bracketright,   exclamdown ]	};
+
+    key <AC01>	{ [         a,          A,        U03b1,        U2192 ]	};
+    key <AC02>	{ [         s,          S,        U2211,        U263a ]	};
+    key <AC03>	{ [         d,          D,       dcaron,       Dcaron ]	};
+    key <AC04>	{ [         f,          F,       oslash,        U2640 ]	};
+    key <AC05>	{ [         g,          G,        U03b3,        U221a ]	};
+    key <AC06>	{ [         h,          H,        U2013,        U2116 ]	};
+    key <AC07>	{ [         j,          J,       ntilde,       Ntilde ]	};
+    key <AC08>	{ [         k,          K,        U2153,        U00bc ]	};
+    key <AC09>	{ [         l,          L,        U2212,        U2113 ]	};
+
+    key <AC10>	{ [ uring,      colon,        semicolon,        Uring ]	};
+    key <AC11>	{ [apostrophe,   quotedbl,        U00a7,        U2194 ]	};
+    
+    key <AC12>  { [  EuroSign, dead_diaeresis, NoSymbol,     NoSymbol ] };    
+    key <BKSL>	{ [ numbersign,      asciitilde,dead_diaeresis, dead_circumflex ]};
+
+    key <LSGT>  { [ backslash,        bar,        slash,     NoSymbol ] };    
+
+    key <AB01>	{ [         y,          Y,       ssharp,        U222b ]	};
+    key <AB02>	{ [         x,          X,     multiply,        U02e3 ]	};
+    key <AB03>	{ [         c,          C,    copyright,        U207f ]	};
+    key <AB04>	{ [         v,          V,        U2026,        U2039 ]	};
+    key <AB05>	{ [         b,          B,        U03b2,        U203a ]	};
+    key <AB06>	{ [         n,          N,       ncaron,       Ncaron ]	};
+    key <AB07>	{ [         m,          M,        U2020,        U2642 ]	};
+    key <AB08>	{ [     comma,       less,        U00ab,        U2264 ]	};
+    key <AB09>	{ [    period,    greater,        U00bb,        U2265 ]	};
+    key <AB10>	{ [     slash,   question,        U00b5,        U00f7 ]	};
+
+    key <SPCE>	{ [     space,nobreakspace,       space, nobreakspace ]	};
+
+    key <KODL>  { [comma, period, comma, period ] };
+
+
+    //ralt = switch
+    key <RALT> {
+        type[Group1]="ONE_LEVEL",
+        symbols[Group1] = [ ISO_Level3_Shift ]
+        };
+    modifier_map Mod5   { ISO_Level3_Shift };
+
+
+    //RWIN = RALT = switch
+//    key <RWIN> {
+//      type[Group1]="ONE_LEVEL",
+//      symbols[Group1] = [ ISO_Level3_Shift ]
+//      };
+//    modifier_map Mod5   { ISO_Level3_Shift };
+    
+};
+
+
