@@ -1,17 +1,33 @@
 " Atramentovo ultimatni .vimrc
 "
+
+"plugins
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+Plugin 'VundleVim/Vundle.vim'
+Plugin 'vim-airline/vim-airline'
+Plugin 'vim-airline/vim-airline-themes'
+Plugin 'scrooloose/nerdtree'
+Plugin 'majutsushi/tagbar'
+Plugin 'tpope/vim-fugitive'
+Plugin 'valloric/youcompleteme'
+Plugin 'jez/vim-superman'
+Plugin 'arrufat/vala.vim'
+Plugin 'SirVer/ultisnips'
+Plugin 'honza/vim-snippets'
+call vundle#end()
+
 set nocompatible
-execute pathogen#infect()
-call pathogen#helptags()
-filetype plugin indent on 
 set mouse=a
+filetype plugin indent on 
 
 "set invpaste
 syntax enable
 set history=1000
 set tw=0
-set shiftwidth=2
-set tabstop=2
+set shiftwidth=4
+set tabstop=4
+set expandtab
 set autoindent 
 set backspace=2 "nastaví backaspace na 'normální' chování
 set wildmenu
@@ -20,6 +36,16 @@ let g:Tex_Folding=0
 set grepprg=grep\ -nH\ $*
 set iskeyword+=:
 set ruler
+set scrolloff=999
+set completeopt-=preview
+
+set noshowmode
+set encoding=utf-8
+set term=xterm-256color
+
+"set tags+=~/.vim/tags/cpp
+"set tags+=~/.vim/tags/qt4
+"set tags+=~/.vim/tags/clementine
 
 "nastavení barev
 hi Pmenu guibg=steelblue3 guifg=bg ctermfg=7 ctermbg=4 cterm=bold
@@ -28,6 +54,9 @@ hi Folded ctermfg=DarkGrey ctermbg=Black
 hi Comment ctermfg=LightBlue
 hi TabLineSel ctermbg=LightBlue ctermfg=Yellow
 hi TabLine ctermfg=DarkGrey
+hi LineNr ctermbg=darkgrey ctermfg=white
+
+
 
 map  :tabnew 
 map [1;5C :tabnext  
@@ -44,10 +73,31 @@ if has("autocmd")
 	      \ endif
 endif
 
-au BufRead /tmp/mutt-* set tw=0
-au BufRead /tmp/mutt-* set spell
-au BufRead /tmp/mutt-* set spelllang=cs
+au BufRead /tmp/neomutt-* set tw=0
+au BufRead /tmp/neomutt-* set spell
+au BufRead /tmp/neomutt-* set spelllang=cs
 
-:map <F2> :w<cr>
-:map <F9> :w<cr>:make<cr><cr>
-:map <F3> :Explore
+"air-line configuration
+let g:airline_powerline_fonts = 1
+
+"ycm config
+let g:ycm_global_ycm_extra_conf = '~/.vim/.ycm_extra_conf.py'
+
+" make YCM compatible with UltiSnips (using supertab)
+let g:ycm_key_list_select_completion = ['<C-n>', '<Down>']
+let g:ycm_key_list_previous_completion = ['<C-p>', '<Up>']
+let g:SuperTabDefaultCompletionType = '<C-n>'
+
+" better key bindings for UltiSnipsExpandTrigger
+let g:UltiSnipsExpandTrigger = "<tab>"
+let g:UltiSnipsJumpForwardTrigger = "<tab>"
+let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
+
+
+
+
+nnoremap <F2> :w
+nnoremap <F3> :Explore
+nnoremap <M-F9> :make
+
+
