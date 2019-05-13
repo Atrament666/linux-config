@@ -1,5 +1,6 @@
 source "gpg -d ~/.mutt/passwords.gpg |"
 set imap_user = "machat.v"
+set from = "Vladimír Machat <machat.v@gmail.com>"
 set folder = imaps://imap.gmail.com
 set spoolfile = +INBOX
 set record = "+[Gmail]/Sent Mail"

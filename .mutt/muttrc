@@ -5,6 +5,7 @@ macro index <f3> '<enter-command>source ~/.mutt/machat.v<enter><change-folder>!<
 
 mailboxes imaps://atrament666@imap.gmail.com imaps://machat.v@imap.gmail.com
 
+set index_format="%Z %{%a %d.%b %H:%M} %-30.30a %s"
 
 bind index G imap-fetch-mail
 bind attach <return> view-mailcap
@@ -30,7 +31,8 @@ set sort=reverse-threads
 set sort_aux = last-date-received
 
 ## Abook
-set query_command= "abook --mutt-query '%s'"
+#set query_command= "abook --mutt-query '%s'"
+set query_command= "muttvcardsearch '%s'"
 macro index,pager  a "<pipe-message>abook --add-email-quiet<return>" "Add this sender to Abook"
 bind editor        <Tab> complete-query
 
