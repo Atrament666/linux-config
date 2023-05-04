@@ -3,22 +3,25 @@
 
 "plugins
 set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
-Plugin 'VundleVim/Vundle.vim'
-Plugin 'vim-airline/vim-airline'
-Plugin 'vim-airline/vim-airline-themes'
-Plugin 'majutsushi/tagbar'
-Plugin 'tpope/vim-fugitive'
-Plugin 'peterhoeg/vim-qml'
-Plugin 'tpope/vim-vinegar'
-Plugin 'neoclide/coc.nvim'
-Plugin 'cpiger/neodebug'
-Plugin 'igankevich/mesonic'
-Plugin 'rust-lang/rust.vim'
-Plugin 'timonv/vim-cargo'
-Plugin 'yggdroot/indentline'
-Plugin 'bfrg/vim-cpp-modern'
-call vundle#end()
+call plug#begin()
+Plug 'VundleVim/Vundle.vim'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+Plug 'majutsushi/tagbar' "okno s metodami a proměnnými
+Plug 'tpope/vim-fugitive'
+Plug 'peterhoeg/vim-qml'
+Plug 'tpope/vim-vinegar' "lepší procházení souborů
+Plug 'neoclide/coc.nvim', {'branch':'release'}
+Plug 'cpiger/neodebug'
+Plug 'yggdroot/indentline'
+Plug 'bfrg/vim-cpp-modern'
+Plug 'kyazdani42/nvim-tree.lua'
+Plug 'aklt/plantuml-syntax'
+Plug 'junegunn/goyo.vim' "distraction free writing
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-repeat'
+Plug 'terror/chatgpt.nvim'
+call plug#end()
 
 set nocompatible
 set mouse=a
@@ -44,7 +47,7 @@ set ruler
 set scrolloff=999
 set completeopt-=preview
 set clipboard=unnamedplus
-
+set conceallevel=0
 set noshowmode
 set encoding=utf-8
 
@@ -73,6 +76,8 @@ imap  :tabnew
 imap <C-Right> :tabnext  
 imap <C-Left> :tabprevious 
 
+inoremap <silent><expr> <tab> coc#pum#visible() ? coc#pum#confirm() : "\<CR>"
+
 if has("autocmd")
 	  autocmd BufReadPost *
 	      \ if line("'\"") > 1 && line("'\"") <= line("$") |
@@ -100,8 +105,8 @@ let g:UltiSnipsExpandTrigger = "<tab>"
 let g:UltiSnipsJumpForwardTrigger = "<tab>"
 let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
 
-
-nnoremap <F2> :w
+" Allow saving of files as sudo when I forgot to start vim using sudo.
+cmap w!! w !sudo tee > /dev/null %
 
 "spelling
 "set spelllang=cs
@@ -143,3 +148,29 @@ function ToggleWrap()
     inoremap <buffer> <silent> <End>  <C-o>g<End>
   endif
 endfunction
+
+function! ToggleHeaderSource()
+    let file_path = expand("%")
+    let file_name = expand("%<")
+    let extension = split(file_path, '\.')[-1]
+    if extension == "c" || extension == "cpp"
+        let header_file = join([file_name, ".h"], "")
+        if filereadable(header_file)
+            execute "e" header_file
+        else
+            echo join(["No header file", header_file], "")
+        endif
+    endif
+    if extension == "h"
+        echo "Toggling to source"
+        let source_file = join([file_name, ".cpp"], "")
+        if filereadable(source_file)
+            execute "e" source_file
+        else
+            echo join(["No source file", source_file], "")
+        endif
+
+    endif
+endfunction
+
+
