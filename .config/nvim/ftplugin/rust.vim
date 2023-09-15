@@ -1,2 +1,2 @@
 map <F9> :CargoBuild
-map <F33> :CargoRune
+map <F33> :CargoRun

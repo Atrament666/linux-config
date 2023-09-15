@@ -20,7 +20,15 @@ Plug 'aklt/plantuml-syntax'
 Plug 'junegunn/goyo.vim' "distraction free writing
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-repeat'
-Plug 'terror/chatgpt.nvim'
+Plug 'tyru/open-browser.vim'
+Plug 'weirongxu/plantuml-previewer.vim'
+Plug 'preservim/nerdtree'
+Plug 'sirver/UltiSnips'
+Plug 'honza/vim-snippets'
+Plug 'junegunn/fzf.vim'
+Plug 'nvim-neorg/neorg' | Plug 'nvim-lua/plenary.nvim'
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+Plug 'stevearc/oil.nvim'
 call plug#end()
 
 set nocompatible
@@ -41,13 +49,13 @@ set backspace=2 "nastaví backaspace na 'normální' chování
 set wildmenu
 let g:tex_flavor='pdflatex %'
 let g:Tex_Folding=0
+let g:indentLine_setConceal=0
 set grepprg=grep\ -nH\ $*
 set iskeyword+=:
 set ruler
 set scrolloff=999
 set completeopt-=preview
 set clipboard=unnamedplus
-set conceallevel=0
 set noshowmode
 set encoding=utf-8
 
@@ -66,7 +74,7 @@ hi LineNr ctermbg=darkgrey ctermfg=white
 hi CursorLine cterm=NONE ctermbg=darkgrey
 
 set cursorline
-
+set splitbelow
 
 map  :tabnew 
 map <C-Right> :tabnext  
@@ -76,7 +84,13 @@ imap  :tabnew
 imap <C-Right> :tabnext  
 imap <C-Left> :tabprevious 
 
-inoremap <silent><expr> <tab> coc#pum#visible() ? coc#pum#confirm() : "\<CR>"
+inoremap <silent><expr> <cr> coc#pum#visible() ? coc#pum#confirm() : '<CR>'
+map <F3> :NERDTreeToggle
+map <F15> :NERDTreeFind
+map <tab> <Right>
+map <S-Tab> <Left>
+let g:UltiSnipsExpandTrigger='<tab>'
+map <f16> :Buffers
 
 if has("autocmd")
 	  autocmd BufReadPost *
@@ -91,19 +105,6 @@ au BufRead /tmp/neomutt-* set spelllang=cs
 
 "air-line configuration
 let g:airline_powerline_fonts = 1
-
-"ycm config
-let g:ycm_global_ycm_extra_conf = '~/.vim/.ycm_extra_conf.py'
-
-" make YCM compatible with UltiSnips (using supertab)
-let g:ycm_key_list_select_completion = ['<C-n>', '<Down>']
-let g:ycm_key_list_previous_completion = ['<C-p>', '<Up>']
-let g:SuperTabDefaultCompletionType = '<C-n>'
-
-" better key bindings for UltiSnipsExpandTrigger
-let g:UltiSnipsExpandTrigger = "<tab>"
-let g:UltiSnipsJumpForwardTrigger = "<tab>"
-let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
 
 " Allow saving of files as sudo when I forgot to start vim using sudo.
 cmap w!! w !sudo tee > /dev/null %
@@ -167,10 +168,32 @@ function! ToggleHeaderSource()
         if filereadable(source_file)
             execute "e" source_file
         else
-            echo join(["No source file", source_file], "")
+            echo join(["No source file", source_file], ""):
         endif
 
     endif
 endfunction
 
+lua << EOF
+require('neorg').setup {
+    load = {
+        ["core.defaults"] = {},
+        ["core.concealer"] = {},
+        ["core.dirman"] = {
+            config = {
+                workspaces = {
+                    notes = "~/notes",
+                },
+            },
+        },
+    },
+}
+
+
+require('nvim-treesitter.configs').setup {
+    parser_install_dir = "~/.treesitter/"
+}
+
+require("oil").setup()
+EOF
 
