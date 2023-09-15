@@ -24,6 +24,8 @@ alias netbeans='netbeans -J-Dswing.aatext=true -J-Dawt.useSystemAAFontSettings=l
 alias mc='. /usr/lib/mc/mc-wrapper.sh'
 alias vim='nvim'
 
+
+
 # priradi do PATH adresare bin v domovskem adresari
 export PATH="~/bin:$PATH"
 
@@ -37,7 +39,7 @@ export HISTSIZE=-1
 export HISTFILESIZE=-1
 shopt -s histappend
 shopt -s cdspell #corrects typos in names of directories
-export HISTIGNORE="&:ps:htop:free:cd*:mc:history*"
+export HISTIGNORE="&:ps:htop:free:mc:history*"
 complete -cf sudo
 
 export LC_COLLATE=C
@@ -45,6 +47,7 @@ export ANDROID_HOME=/opt/android-sdk/
 export EDITOR=vim
 export MPD_HOST=localhost
 export MPD_PORT=6600
+
 
 export CXXFLAGS='-std=c++20 -Wall -Weffc++ -Wextra -Wsign-conversion'
 
@@ -56,7 +59,13 @@ export LESS_TERMCAP_se=$'\e[0m' #stop standout
 export LESS_TERMCAP_so=$'\e[01;32m' #start standout - green (info line)
 export LESS_TERMCAP_ue=$'\e[0m' #stop underline
 export LESS_TERMCAP_us=$'\e[1;4;33m' #yellow underscored word
+export GROFF_NO_SGR=1
 
 function mdcd {
     mkdir $1 && cd $1
 }
+
+#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
+export SDKMAN_DIR="$HOME/.sdkman"
+[[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
+
