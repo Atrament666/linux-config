@@ -31,10 +31,10 @@ font xft:URWGothic-Book 11
 floating_modifier $mod
 
 # start a terminal
-bindsym $mod+Return exec xterm
+bindsym $mod+Return exec wezterm 
 
 # kill focused window
-bindsym $mod+Shift+q kill
+bindsym $mod+Shift+q kill 
 
 #use alt-f4 to close windows
 bindsym $alt+F4 kill
@@ -42,25 +42,22 @@ bindsym $alt+F4 kill
 # start program launcher
 #bindsym $mod+d exec --no-startup-id dmenu_recency
 # start rofi (a program launcher)
-bindsym $mod+d exec --no-startup-id rofi -modi ssh#drun#run -show run
+bindsym $mod+d exec --no-startup-id rofi -show run 
 bindsym $mod+Tab exec rofi -show window
 bindsym $mod+Shift+s exec --no-startup-id rofi -modi ssh -show ssh
 #bindsym F1 exec --no-startup-id qdbus org.kde.yakuake /yakuake/window toggleWindowState
 
 # launch categorized menu
-bindsym $mod+z exec --no-startup-id morc_menu
+bindsym $mod+z exec --no-startup-id morc_menu 
 
 ################################################################################################
 ## sound-section - DO NOT EDIT if you wish to automatically upgrade Alsa -> Pulseaudio later! ##
 ################################################################################################
 
-exec --no-startup-id /opt/volumeicon/bin/volumeicon
-bindsym $mod+Ctrl+m exec terminal -e 'alsamixer'
-bindsym $mod+Shift+h exec --no-startup-id toggle-sound-source
-#exec --no-startup-id pulseaudio
-#exec --no-startup-id pa-applet
-#bindsym $mod+Ctrl+m exec pavucontrol
-
+bindsym $mod+s exec python /home/atrament/.local/bin/switch_sink.py
+bindsym XF86AudioLowerVolume exec python /home/atrament/.local/bin/change_volume -0.05
+bindsym XF86AudioRaiseVolume exec python /home/atrament/.local/bin/change_volume 0.05
+bindsym XF86AudioMute exec python /home/atrament/.local/bin/toggle_mute
 ################################################################################################
 
 # Screen brightness controls
@@ -68,23 +65,24 @@ bindsym $mod+Shift+h exec --no-startup-id toggle-sound-source
 # bindsym XF86MonBrightnessDown exec "xbacklight -dec 10; notify-send 'brightness down'"
 
 # Start Applications
-bindsym $mod+Ctrl+b exec terminal -e 'bmenu'
-bindsym $mod+F2 exec palemoon
-bindsym $mod+F3 exec pcmanfm
-# bindsym $mod+F3 exec ranger
-bindsym $mod+Shift+F3 exec gksu pcmanfm
-bindsym $mod+F5 exec terminal -e 'mocp'
 bindsym $mod+t exec --no-startup-id pkill compton
 bindsym $mod+Ctrl+t exec --no-startup-id compton -b
 bindsym $mod+Shift+d --release exec "killall dunst; exec notify-send 'restart dunst'"
-bindsym Print exec --no-startup-id gnome-screenshot -i 
+bindsym Print exec --no-startup-id gnome-screenshot -i
 bindsym $mod+Print --release exec --no-startup-id i3-scrot -w
 bindsym $mod+Shift+Print --release exec --no-startup-id i3-scrot -s
 bindsym $mod+Ctrl+x --release exec --no-startup-id xkill
-bindsym $mod+Pause exec "i3exit suspend"
+bindsym $mod+Pause exec "i3exit suspend" 
 bindsym XF86Calculator exec --no-startup-id kcalc
+bindsym $mod+p exec --no-startup-id rofi-pass
 
 # focus_follows_mouse no
+
+#rotate focused screen
+bindsym Ctrl+Mod1+Up exec "/home/atrament/bin/screen_rotate normal"
+bindsym Ctrl+Mod1+Left exec "/home/atrament/bin/screen_rotate left"
+bindsym Ctrl+Mod1+Right exec "/home/atrament/bin/screen_rotate right"
+bindsym Ctrl+Mod1+Down exec "/home/atrament/bin/screen_rotate inverted"
 
 # change focus
 bindsym $mod+j focus left
@@ -241,6 +239,9 @@ for_window [class="cm-ui"] floating enabled
 for_window [class="kcalc"] floating enabled
 for_window [title="debug"] floating enabled
 
+for_window [instance="Godot_Engine"] floating enable
+assign [instance="Godot_engine"] $ws2
+
 # switch to workspace with urgent window automatically
 for_window [urgent=latest] focus
 
@@ -253,21 +254,24 @@ bindsym $mod+Shift+r restart
 # exit i3 (logs you out of your X session)
 bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
 
+#filter clipboard from itnetwork bullshiting
+bindsym --release Ctrl+p exec xdotool type --clearmodifiers --delay 0 -- "$(xclip -o | sed '/^Zdroj: https:\/\/www.itnetwork.cz/d')"
+
 # Set shut down, restart and locking features
 bindsym $mod+eacute mode "$mode_system"
 set $mode_system (l)ock, (e)xit, switch_(u)ser, (s)uspend, (h)ibernate, (r)eboot, (Shift+s)hutdown
 mode "$mode_system" {
-    bindsym l exec --no-startup-id i3exit lock, mode "default"
-        bindsym s exec --no-startup-id i3exit suspend, mode "default"
-        bindsym u exec --no-startup-id i3exit switch_user, mode "default"
-        bindsym e exec --no-startup-id i3exit logout, mode "default"
-        bindsym h exec --no-startup-id i3exit hibernate, mode "default"
-        bindsym r exec --no-startup-id i3exit reboot, mode "default"
-        bindsym Shift+s exec --no-startup-id i3exit shutdown, mode "default"
+	bindsym l exec --no-startup-id i3exit lock, mode "default"
+		bindsym s exec --no-startup-id i3exit suspend, mode "default"
+		bindsym u exec --no-startup-id i3exit switch_user, mode "default"
+		bindsym e exec --no-startup-id i3exit logout, mode "default"
+		bindsym h exec --no-startup-id i3exit hibernate, mode "default"
+		bindsym r exec --no-startup-id i3exit reboot, mode "default"
+		bindsym Shift+s exec --no-startup-id i3exit shutdown, mode "default"
 
 # exit system mode: "Enter" or "Escape"
-        bindsym Return mode "default"
-        bindsym Escape mode "default"
+		bindsym Return mode "default"
+		bindsym Escape mode "default"
 }
 
 # Resize window (you can also use the mouse for that)
@@ -278,20 +282,20 @@ mode "resize" {
 # Pressing right will grow the window’s width.
 # Pressing up will shrink the window’s height.
 # Pressing down will grow the window’s height.
-    bindsym j resize shrink width 5 px or 5 ppt
-        bindsym k resize grow height 5 px or 5 ppt
-        bindsym l resize shrink height 5 px or 5 ppt
-        bindsym semicolon resize grow width 5 px or 5 ppt
+	bindsym j resize shrink width 5 px or 5 ppt
+		bindsym k resize grow height 5 px or 5 ppt
+		bindsym l resize shrink height 5 px or 5 ppt
+		bindsym semicolon resize grow width 5 px or 5 ppt
 
 # same bindings, but for the arrow keys
-        bindsym Left resize shrink width 10 px or 10 ppt
-        bindsym Down resize grow height 10 px or 10 ppt
-        bindsym Up resize shrink height 10 px or 10 ppt
-        bindsym Right resize grow width 10 px or 10 ppt
+		bindsym Left resize shrink width 10 px or 10 ppt
+		bindsym Down resize grow height 10 px or 10 ppt
+		bindsym Up resize shrink height 10 px or 10 ppt
+		bindsym Right resize grow width 10 px or 10 ppt
 
 # exit resize mode: Enter or Escape
-        bindsym Return mode "default"
-        bindsym Escape mode "default"
+		bindsym Return mode "default"
+		bindsym Escape mode "default"
 }
 
 # Lock screen
@@ -300,21 +304,16 @@ bindsym $mod+9 exec --no-startup-id blurlock
 # Autostart applications
 exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
 exec --no-startup-id nm-applet
-#exec --no-startup-id xfce4-power-manager
 exec --no-startup-id pamac-tray
-#exec_always --no-startup-id ff-theme-util
 exec_always --no-startup-id fix_xcursor
-exec --no-startup-id feh --bg-scale ~/ownCloud/Photos/wallpaper.jpg
 exec --no-startup-id numlockx
-exec --no-startup-id setxkbmap cz-atra -option caps:escape
 exec --no-startup-id nextcloud
-#exec --no-startup-id yakuake
 exec --no-startup-id indicator-kdeconnect
-exec --no-startup-id keepassxc
 exec --no-startup-id picom -b
-exec --no-startup-id xset r rate 190 35
 exec --no-startup-id xbindkeys
-
+#exec --no-startup-id xset r rate 190 35
+#kvůli chybě v xdotools je potřeba znova nastavit keyboard layout pomocí setxkbmap, aby správně fungovalo rofi-pass
+exec --no-startup-id setxkbmap cz-atra
 
 # Color palette used for the terminal ( ~/.Xresources file )
 # Colors are gathered based on the documentation:
@@ -351,31 +350,31 @@ set_from_resource $term_color15    color15
 bar {
 #i3bar_command i3bar
 #status_command i3status
-    status_command py3status --config ~/.i3/i3status.conf --log-file ~/.i3/py3status.log
-    position top
+	status_command py3status --config ~/.i3/i3status.conf --log-file ~/.i3/py3status.log
+		position top
 
 ## please set your primary output first. Example: 'xrandr --output eDP1 --primary'
-	tray_output primary
+		tray_output primary
 #	tray_output eDP1
 
-        bindsym button4 nop
-        bindsym button5 nop
+		bindsym button4 nop
+		bindsym button5 nop
 #   font xft:URWGothic-Book 11
-        font pango: FontAwesome 10     
-        strip_workspace_numbers yes
+		font pango: NotoSans 10     
+		strip_workspace_numbers yes
 
-        colors {
-            background #222D31
-                statusline #F9FAF9
-                separator  #454947
+		colors {
+			background #222D31
+				statusline #F9FAF9
+				separator  #454947
 
 #                      border  backgr. text
-                focused_workspace  #F9FAF9 #16a085 #292F34
-                active_workspace   #595B5B #353836 #FDF6E3
-                inactive_workspace #595B5B #222D31 #EEE8D5
-                binding_mode       #16a085 #2C2C2C #F9FAF9
-                urgent_workspace   #16a085 #FDF6E3 #E5201D
-        }
+				focused_workspace  #F9FAF9 #16a085 #292F34
+				active_workspace   #595B5B #353836 #FDF6E3
+				inactive_workspace #595B5B #222D31 #EEE8D5
+				binding_mode       #16a085 #2C2C2C #F9FAF9
+				urgent_workspace   #16a085 #FDF6E3 #E5201D
+		}
 }
 
 # hide/unhide i3status bar
@@ -383,8 +382,8 @@ bindsym $mod+m bar mode toggle
 
 # Theme colors
 # class                   border  backgr. text    indic.   child_border
-client.focused          #556064 #556064 #80FFF9 #FDF6E3
-client.focused_inactive #2F3D44 #2F3D44 #1ABC9C #454948
+client.focused          #34ebcf #34ebcf #000000 #FDF6E3
+client.focused_inactive #ffff00 #2F3D44 #1ABC9C #454948
 client.unfocused        #2F3D44 #2F3D44 #1ABC9C #454948
 client.urgent           #CB4B16 #FDF6E3 #1ABC9C #268BD2
 client.placeholder      #000000 #0c0c0c #ffffff #000000 
@@ -418,32 +417,32 @@ set $mode_gaps_inner Inner Gaps: +|-|0 (local), Shift + +|-|0 (global)
 bindsym $mod+Shift+g mode "$mode_gaps"
 
 mode "$mode_gaps" {
-    bindsym o      mode "$mode_gaps_outer"
-        bindsym i      mode "$mode_gaps_inner"
-        bindsym Return mode "default"
-        bindsym Escape mode "default"
+	bindsym o      mode "$mode_gaps_outer"
+		bindsym i      mode "$mode_gaps_inner"
+		bindsym Return mode "default"
+		bindsym Escape mode "default"
 }
 mode "$mode_gaps_inner" {
-    bindsym plus  gaps inner current plus 5
-        bindsym minus gaps inner current minus 5
-        bindsym 0     gaps inner current set 0
+	bindsym plus  gaps inner current plus 5
+		bindsym minus gaps inner current minus 5
+		bindsym 0     gaps inner current set 0
 
-        bindsym Shift+plus  gaps inner all plus 5
-        bindsym Shift+minus gaps inner all minus 5
-        bindsym Shift+0     gaps inner all set 0
+		bindsym Shift+plus  gaps inner all plus 5
+		bindsym Shift+minus gaps inner all minus 5
+		bindsym Shift+0     gaps inner all set 0
 
-        bindsym Return mode "default"
-        bindsym Escape mode "default"
+		bindsym Return mode "default"
+		bindsym Escape mode "default"
 }
 mode "$mode_gaps_outer" {
-    bindsym plus  gaps outer current plus 5
-        bindsym minus gaps outer current minus 5
-        bindsym 0     gaps outer current set 0
+	bindsym plus  gaps outer current plus 5
+		bindsym minus gaps outer current minus 5
+		bindsym 0     gaps outer current set 0
 
-        bindsym Shift+plus  gaps outer all plus 5
-        bindsym Shift+minus gaps outer all minus 5
-        bindsym Shift+0     gaps outer all set 0
+		bindsym Shift+plus  gaps outer all plus 5
+		bindsym Shift+minus gaps outer all minus 5
+		bindsym Shift+0     gaps outer all set 0
 
-        bindsym Return mode "default"
-        bindsym Escape mode "default"
+		bindsym Return mode "default"
+		bindsym Escape mode "default"
 }

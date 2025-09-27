@@ -8,10 +8,12 @@
 
 # barva promptu v zavislosti zda je spusteno jako root ci ne
 if [[ $EUID -ne 0 ]]; then
-  PS1=$'\[\033[32m\]\u250c[\u@\h][\w]\n\u2514\$\[\033[0m\] '
+  PS1=$'\[\033[32m\]\u251c[\u@\h][\w]\n\u2514\$\[\033[0m\] '
 else
   PS1=$'\[\033[31m\]\u250c[\u@\h][\w]\n\u2514\$\[\033[0m\] '
 fi
+
+
 
 #nastavení kurzoru na blikající podtržítko
 echo -e -n "\x1b[\x34 q"
@@ -22,7 +24,6 @@ alias grep='grep --color=always'
 alias less='less -R'
 alias netbeans='netbeans -J-Dswing.aatext=true -J-Dawt.useSystemAAFontSettings=lcd'
 alias mc='. /usr/lib/mc/mc-wrapper.sh'
-alias vim='nvim'
 
 
 
@@ -33,13 +34,18 @@ if [ -f ~/.bash_powerline.sh  ]; then
     . ~/.bash_powerline.sh
 fi
 
-# nastavení historie
-export PROMPT_COMMAND="history -a"
+# Nutí bash aktualizovat $COLUMNS a $LINES
+shopt -s checkwinsize
+
+export PROMPT_COMMAND='printf "\e[0;32m┌%*s\e[0m\n" "$(( $(tput cols) - 1 ))" | sed "s/ /─/g"'
+
 export HISTSIZE=-1
 export HISTFILESIZE=-1
 shopt -s histappend
 shopt -s cdspell #corrects typos in names of directories
 export HISTIGNORE="&:ps:htop:free:mc:history*"
+
+
 complete -cf sudo
 
 export LC_COLLATE=C
@@ -47,10 +53,12 @@ export ANDROID_HOME=/opt/android-sdk/
 export EDITOR=vim
 export MPD_HOST=localhost
 export MPD_PORT=6600
-
+export DISPLAY=:0
+export XAUTHORITY=/home/atrament/.Xauthority
+export TERM=xterm-256color
 
 export CXXFLAGS='-std=c++20 -Wall -Weffc++ -Wextra -Wsign-conversion'
-
+export SUDO_ASKPASS=/usr/bin/ksshaskpass
 #barvy pro less
 export LESS_TERMCAP_mb=$'\e[1;5;36m'  #blinking
 export LESS_TERMCAP_md=$'\e[1;36m' #bold - 36 = cyan 
@@ -60,10 +68,14 @@ export LESS_TERMCAP_so=$'\e[01;32m' #start standout - green (info line)
 export LESS_TERMCAP_ue=$'\e[0m' #stop underline
 export LESS_TERMCAP_us=$'\e[1;4;33m' #yellow underscored word
 export GROFF_NO_SGR=1
-
+export OPENAI_API_KEY=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
 function mdcd {
     mkdir $1 && cd $1
 }
+
+#some fzf goodies for bash
+source /usr/share/fzf/key-bindings.bash
+source /usr/share/fzf/completion.bash
 
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 export SDKMAN_DIR="$HOME/.sdkman"
