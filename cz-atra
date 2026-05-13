@@ -12,11 +12,10 @@ xkb_symbols "standard" {
      
     //2009 by Igor Mega  <imega@imega.cz>    
     //Create from cz layout created by Kamil Toman <ktoman@email.cz> 
-    //2012 edited by Atrament 
+    //2012 edited by Atrament
+    //2026 changed to qwerty layout by Atrament
 
-    //all keys are defined - do not need it
-	  
-    //include "latin"
+    // columns - normal, with shift, with ralt, with shift+ralt
 
     name[Group1]= "CzePrg";
 
@@ -39,7 +38,7 @@ xkb_symbols "standard" {
     key <AD03>	{ [         e,          E,     EuroSign,         cent ]	};
     key <AD04>	{ [         r,          R,   registered,     trademark]	};
     key <AD05>	{ [         t,          T,       tcaron,       Tcaron ]	};
-    key <AD06>  { [         z,          Z,        U03b4,        U2204 ] };
+    key <AD06>  { [         y,          Y,        U03b4,        U2204 ] };
     key <AD07>	{ [         u,          U,        U03c9,        U2126 ]	};
     key <AD08>	{ [         i,          I,        U221e,        U2229 ]	};
     key <AD09>	{ [         o,          O,       oacute,       Oacute ]	};
@@ -66,7 +65,7 @@ xkb_symbols "standard" {
 
     key <LSGT>  { [ backslash,        bar,        slash,     NoSymbol ] };    
 
-    key <AB01>	{ [         y,          Y,       ssharp,        U222b ]	};
+    key <AB01>	{ [         z,          Z,       ssharp,        U222b ]	};
     key <AB02>	{ [         x,          X,     multiply,        U02e3 ]	};
     key <AB03>	{ [         c,          C,    copyright,        U207f ]	};
     key <AB04>	{ [         v,          V,        U2026,        U2039 ]	};
